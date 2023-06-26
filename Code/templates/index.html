@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ML Model Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            padding: 8px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .no-results {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>News Article Sorting Model</h1>
+        <form action="/process1" method="POST">
+            <div class="form-group">
+                <label for="sentences">Enter a Sentence or Sentences(comma-separated):</label>
+                <input type="text" id="sentences" name="sentences" placeholder="e.g: I love to play football" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+        {% if sentences is not none and predictions is not none %}
+        <h2>Prediction Results:</h2>
+        <table>
+            <tr>
+                <th>Sentence</th>
+                <th>Prediction</th>
+            </tr>
+            {% for i in range(sentences|length) %}
+            <tr>
+                <td>{{ sentences[i] }}</td>
+                <td>{{ predictions[i] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% elif sentences is not none %}
+        <p class="no-results">No predictions available.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
