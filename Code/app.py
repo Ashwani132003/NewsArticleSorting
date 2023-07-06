@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template
 import joblib
 from sklearn.feature_extraction.text import CountVectorizer
-# from model import preprocess_text
+import logging
+
+logging.basicConfig(filename='record.log', level=logging.DEBUG)
 
 model1 = joblib.load('model1.pkl')
 vectorizer = joblib.load('pre_fitted_vectorizer.pkl')  # Load the pre-fitted CountVectorizer
@@ -16,7 +18,8 @@ def home():
 def process1():
     # Get the input sentences and use model1 for prediction
     sentences = request.form.get('sentences')  # Get the input sentences from the request
-
+    logging.debug("inputs taken")
+    
     # Split the sentences into a list
     sentences_list = sentences.split(',')
 
@@ -33,4 +36,4 @@ def process1():
     return render_template('index.html', sentences=sentences_list, predictions=processed_predictions)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
